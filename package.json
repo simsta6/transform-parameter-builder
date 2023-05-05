@@ -1,0 +1,33 @@
+{
+    "name": "transform-parameter-builder",
+    "version": "0.1.0",
+    "description": "Transform parameters builder for imodel transformations service FilterByViewDefinition transformation",
+    "main": "lib/index.js",
+    "scripts": {
+        "build": "tsc",
+        "prebuild": "rimraf lib",
+        "start": "node ./lib/index.js",
+        "lint": "eslint -f visualstudio \"./src/**/*.ts\" 1>&2",
+        "lint:fix": "eslint --fix -f visualstudio \"./src/**/*.ts\" 1>&2",
+        "test": "mocha ./lib/tests/**/*.test.js\""
+    },
+    "keywords": [],
+    "license": "MIT",
+    "devDependencies": {
+        "@itwin/core-bentley": "^3.0.0",
+        "@itwin/core-common": "^3.0.0",
+        "@itwin/core-geometry": "^3.0.0",
+        "@itwin/eslint-plugin": "^3.0.0",
+        "@types/chai": "^4.3.4",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "^18.16.0",
+        "chai": "^4.3.7",
+        "eslint": "^7.0.0",
+        "mocha": "^10.2.0",
+        "typescript": "^4.9.5"
+    },
+    "engines": {
+        "npm": ">=8",
+        "node": ">=16"
+    }
+}

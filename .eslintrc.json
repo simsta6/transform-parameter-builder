@@ -1,0 +1,10 @@
+{
+    "root": true,
+    "plugins": [
+        "@itwin"
+    ],
+    "extends": "plugin:@itwin/itwinjs-recommended",
+    "rules": {
+        "no-console": "off"
+    }
+}

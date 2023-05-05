@@ -1,0 +1,29 @@
+# dependencies
+node_modules
+
+# build output
+.nyc_output
+lib
+build
+/**/test/output
+/generated-docs
+/staging-docs
+/out
+**/DevBuild.txt
+coverage
+full_stack_test_results
+integration_test_results
+ecschema-rpcinterface-tests-result
+imjs_plugins
+imjs_extensions
+!tools/build
+
+# docs
+/public
+
+# trash
+*.bak
+*.orig
+.node-xmlhttprequest-sync*
+savedView.json
+transformParameters.json
