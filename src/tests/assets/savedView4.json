@@ -1,0 +1,182 @@
+{
+    "savedView": {
+        "id": "id",
+        "shared": true,
+        "savedViewData": {
+            "itwin3dView": {
+                "origin": [-235870.85739598112, 752507.447966375, -215168.79339178716],
+                "extents": [1260462.3793808883, 581288.5047085099, 630231.1896904444],
+                "angles": {
+                    "pitch": -35.26438968275467,
+                    "roll": -45,
+                    "yaw": 29.999999999999993
+                },
+                "camera": {
+                    "lens": 89.99999999999999,
+                    "focusDist": 630231.1896904444,
+                    "eye": [-35439.52598844134, 61657.283483157924, 386005.680616368]
+                },
+                "categories": {
+                    "enabled": ["0x20000000008"]
+                },
+                "models": {
+                    "enabled": ["0x1", "0x10", "0x20000000002", "0x20000000007", "0x20000000005", "0x20000000006"]
+                },
+                "displayStyle": {
+                    "viewflags": {
+                        "renderMode": 6,
+                        "noConstructions": true,
+                        "clipVolume": true,
+                        "backgroundMap": true
+                    },
+                    "environment": {
+                        "ground": {
+                            "display": false,
+                            "elevation": -0.01,
+                            "aboveColor": {
+                                "red": 0,
+                                "green": 100,
+                                "blue": 0
+                            },
+                            "belowColor": {
+                                "red": 101,
+                                "green": 67,
+                                "blue": 33
+                            }
+                        },
+                        "sky": {
+                            "display": true,
+                            "twoColor": true,
+                            "skyColor": {
+                                "red": 222,
+                                "green": 242,
+                                "blue": 255
+                            },
+                            "groundColor": {
+                                "red": 240,
+                                "green": 236,
+                                "blue": 232
+                            },
+                            "zenithColor": {
+                                "red": 222,
+                                "green": 242,
+                                "blue": 255
+                            },
+                            "nadirColor": {
+                                "red": 240,
+                                "green": 236,
+                                "blue": 232
+                            }
+                        }
+                    }
+                }
+            },
+            "legacyView": {
+                "is2d": false,
+                "groupId": "-1",
+                "name": "View 1",
+                "shared": true,
+                "categorySelectorProps": {
+                    "classFullName": "BisCore:CategorySelector",
+                    "code": {
+                        "spec": "0x1",
+                        "scope": "0x1",
+                        "value": ""
+                    },
+                    "model": "0x10",
+                    "categories": ["0x20000000008"]
+                },
+                "modelSelectorProps": {
+                    "classFullName": "BisCore:ModelSelector",
+                    "code": {
+                        "spec": "0x1",
+                        "scope": "0x1",
+                        "value": ""
+                    },
+                    "model": "0x10",
+                    "models": ["0x1", "0x10", "0x20000000002", "0x20000000007", "0x20000000005", "0x20000000006"]
+                },
+                "displayStyleProps": {
+                    "classFullName": "BisCore:DisplayStyle",
+                    "jsonProperties": {
+                        "styles": {
+                            "viewflags": {
+                                "noConstruct": true,
+                                "clipVol": true,
+                                "backgroundMap": true,
+                                "renderMode": 6
+                            },
+                            "environment": {
+                                "sky": {
+                                    "display": true,
+                                    "twoColor": true,
+                                    "groundColor": 15265008,
+                                    "zenithColor": 16773854,
+                                    "nadirColor": 15265008,
+                                    "skyColor": 16773854
+                                },
+                                "ground": {
+                                    "display": false,
+                                    "elevation": -0.01,
+                                    "aboveColor": 25600,
+                                    "belowColor": 2179941
+                                }
+                            }
+                        }
+                    },
+                    "code": {
+                        "spec": "0x1",
+                        "scope": "0x1",
+                        "value": ""
+                    },
+                    "model": "0x10"
+                },
+                "viewDefinitionProps": {
+                    "classFullName": "BisCore:SpatialViewDefinition",
+                    "jsonProperties": {
+                        "viewDetails": {}
+                    },
+                    "code": {
+                        "spec": "0x1",
+                        "scope": "0x1",
+                        "value": ""
+                    },
+                    "model": "0x10",
+                    "categorySelectorId": "0",
+                    "displayStyleId": "0",
+                    "cameraOn": true,
+                    "origin": [-235870.85739598112, 752507.447966375, -215168.79339178716],
+                    "extents": [1260462.3793808883, 581288.5047085099, 630231.1896904444],
+                    "angles": {
+                        "pitch": -35.26438968275467,
+                        "roll": -45,
+                        "yaw": 29.999999999999993
+                    },
+                    "camera": {
+                        "lens": 89.99999999999999,
+                        "focusDist": 630231.1896904444,
+                        "eye": [-35439.52598844134, 61657.283483157924, 386005.680616368]
+                    },
+                    "modelSelectorId": "0"
+                },
+                "emphasizeElementsProps": {
+                    "neverDrawn": ["0x2000000004b", "0x2000000002d", "0x2000000004f", "0x20000000013", "0x20000000014", "0x20000000016", "0x20000000017"]
+                },
+                "perModelCategoryVisibility": []
+            }
+        },
+        "displayName": "View 1",
+        "tags": [],
+        "extensions": [{
+            "extensionName": "EmphasizeElements",
+            "markdownUrl": "https://www.bentley.com/",
+            "schemaUrl": "https://www.bentley.com/",
+            "data": "{\"emphasizeElementsProps\":{\"neverDrawn\":[\"0x2000000004b\",\"0x2000000002d\",\"0x2000000004f\",\"0x20000000013\",\"0x20000000014\",\"0x20000000016\",\"0x20000000017\"]}}"
+        }, {
+            "extensionName": "PerModelCategoryVisibility",
+            "markdownUrl": "https://www.bentley.com/",
+            "schemaUrl": "https://www.bentley.com/",
+            "data": "{\"perModelCategoryVisibilityProps\":[]}"
+        }]
+    }
+}

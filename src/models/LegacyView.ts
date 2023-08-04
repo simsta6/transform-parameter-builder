@@ -45,12 +45,7 @@ export interface PerModelCategoryData {
   visible: boolean;
 }
 
-export interface SubCategoryOverrideData {
-  invisible: boolean;
-  subCategory: Id64String;
-}
-
-export interface ViewDefinition extends ViewStateProps {
+export interface LegacyView extends ViewStateProps {
   perModelCategoryVisibility?: PerModelCategoryData[];
   emphasizeElementsProps?: EmphasizeElementsProps;
   hiddenModels: Id64Array;
@@ -58,7 +53,3 @@ export interface ViewDefinition extends ViewStateProps {
   viewMode: ViewModes;
 }
 
-export interface SavedView
-{
-  properties: ViewDefinition;
-}

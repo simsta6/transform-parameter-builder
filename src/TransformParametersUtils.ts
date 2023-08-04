@@ -1,28 +1,43 @@
 import { ClipPrimitivePlanesProps, ClipPrimitiveShapeProps, ClipVectorProps } from "@itwin/core-geometry";
-import { ClipData, PlaneProps, ShapeProps, SubCategoryOverrideData, ViewDefinition } from "./models/ViewDefinition";
+import { ClipData, LegacyView, PerModelCategoryData, PlaneProps, ShapeProps } from "./models/LegacyView";
 import { TransformParameters, ViewModes } from "./models/FilterByViewDefinition";
+import { Id64Array } from "@itwin/core-bentley";
+import { SubCategoryOverrideData } from "./models/ITwin3dView";
+import { SavedView } from "./models/SavedView";
+import { NewClipPrimitivePlaneProps, NewClipPrimitiveShapeProps } from "./models/ClipVectors";
 
-/* TODO: in order to support new saved views format we will need to convert these properties (User needs to get response from saved views public API and use prefer header "return=representation"):
-    properties.categorySelectorProps.categories => savedView.savedViewData.itwin3dView.categories
-    properties.modelSelectorProps.models => savedView.savedViewData.models.enabled
-    properties.emphasizeElementsProps.neverDrawn => JSON.parse(savedView.extensions.find(x => x.extensionName === "emphasizeElementsProps").data)
-    properties.displayStyleProps.jsonProperties.styles.subCategoryOvr => savedView.savedViewData.displayStyle.subCategoryOverrides
-    properties.viewDefinitionProps.jsonProperties.viewDetails.clip => savedView.savedViewData.clipVectors
-    properties.perModelCategoryVisibility => JSON.parse(savedView.extensions.find(x => x.extensionName === "perModelCategoryVisibilityProps").data)
-*/
+export function parseSavedView(savedView: SavedView, viewMode: ViewModes): TransformParameters {
+  return {
+    categories: savedView.savedViewData.itwin3dView.categories?.enabled ?? [],
+    models: savedView.savedViewData.itwin3dView.models?.enabled || [],
+    neverDrawn: getExtensionValue<Id64Array>(savedView.extensions, "emphasizeElementsProps"),
+    subCategoryOvr: savedView.savedViewData.itwin3dView.displayStyle?.subCategoryOverrides,
+    clip: tryGetClipData(savedView.savedViewData.itwin3dView.clipVectors),
+    perModelCategoryVisibility: getExtensionValue<PerModelCategoryData[]>(savedView.extensions, "perModelCategoryVisibilityProps") ?? [],
+    hiddenCategories: savedView.savedViewData.itwin3dView.categories?.disabled,
+    hiddenModels: savedView.savedViewData.itwin3dView.models?.disabled,
+    viewMode,
+  };
+}
 
-export function parseLegacyViewDefinitionToTransformParameters(legacyViewDefinition: ViewDefinition, viewMode: ViewModes): TransformParameters {
+export function parseLegacySavedView(legacyViewDefinition: LegacyView, viewMode: ViewModes): TransformParameters {
   return {
     categories: legacyViewDefinition.categorySelectorProps.categories,
     models: legacyViewDefinition.modelSelectorProps?.models || [],
     neverDrawn: legacyViewDefinition.emphasizeElementsProps?.neverDrawn,
     subCategoryOvr: legacyViewDefinition.displayStyleProps.jsonProperties?.styles?.subCategoryOvr as SubCategoryOverrideData[],
-    clip: tryGetClipData(legacyViewDefinition),
+    clip: tryGetClipDataForLegacyView(legacyViewDefinition.viewDefinitionProps.jsonProperties?.viewDetails?.clip),
     perModelCategoryVisibility: legacyViewDefinition.perModelCategoryVisibility,
     hiddenCategories: legacyViewDefinition.hiddenCategories,
     hiddenModels: legacyViewDefinition.hiddenModels,
     viewMode,
   };
+}
+
+function getExtensionValue<R>(extensions: { extensionName: string, data: string }[], extensionName: string): R | undefined {
+  const data = extensions.find((x: { extensionName: string }) => x.extensionName === extensionName)?.data;
+
+  return data ? JSON.parse(data) : undefined;
 }
 
 export function parseTransformParametersToJson(transformParameters: TransformParameters, includeEscapeCharacters?: boolean): string {
@@ -33,17 +48,15 @@ export function parseTransformParametersToJson(transformParameters: TransformPar
   return params.replace(/"/g, '\\"');
 }
 
-function tryGetClipData(view: any): ClipData | undefined {
-  const clip: ClipVectorProps = view.viewDefinitionProps.jsonProperties?.viewDetails?.clip;
-
-  if (!clip || !clip.length)
+function tryGetClipDataForLegacyView(clipVectors: ClipVectorProps | undefined): ClipData | undefined {
+  if (!clipVectors || !clipVectors.length)
     return undefined;
 
-  const clipPlanes: PlaneProps[] = clip
+  const clipPlanes: PlaneProps[] = clipVectors
     .filter((primitive) => isPlanePrimitive(primitive))
     .map((primitive) => (primitive as ClipPrimitivePlanesProps).planes! as PlaneProps);
 
-  const clipShapes: ShapeProps[] = clip
+  const clipShapes: ShapeProps[] = clipVectors
     .filter((primitive) => isShapePrimitive(primitive))
     .map((primitive) => (primitive as ClipPrimitiveShapeProps).shape! as ShapeProps);
 
@@ -51,6 +64,26 @@ function tryGetClipData(view: any): ClipData | undefined {
     shapes: clipShapes.length > 0 ? clipShapes : undefined,
     planes: clipPlanes.length > 0 ? clipPlanes : undefined,
   };
+}
+
+function tryGetClipData(_clipVectors: Array<NewClipPrimitivePlaneProps | NewClipPrimitiveShapeProps> | undefined): ClipData | undefined {
+  // TODO: fix
+  // if (!clipVectors || !clipVectors.length)
+  //   return undefined;
+
+  // const clipPlanes = clipVectors
+  //   .map((primitive) => isNewPlanePrimitive(primitive) && changeDistanceToDistForClips(primitive.planes))
+  //   .filter((primitive) => isNewPlanePrimitive(primitive));
+
+  // const clipShapes = clipVectors
+  //   .filter((primitive) => isNewShapePrimitive(primitive))
+  //   .map((primitive) => (primitive as NewClipPrimitiveShapeProps).shape as unknown as ShapeProps);
+
+  // return {
+  //   shapes: clipShapes.length > 0 ? clipShapes : undefined,
+  //   planes: clipPlanes.length > 0 ? clipPlanes : undefined,
+  // };
+  return;
 }
 
 function isPlanePrimitive(primitive: any): primitive is ClipPrimitivePlanesProps {
