@@ -4,12 +4,13 @@
     "description": "Transform parameters builder for imodel transformations service FilterByViewDefinition transformation",
     "main": "lib/index.js",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc && npm run copy:tests-assets",
         "prebuild": "rimraf lib",
         "start": "node ./lib/index.js",
         "lint": "eslint -f visualstudio \"./src/**/*.ts\" 1>&2",
         "lint:fix": "eslint --fix -f visualstudio \"./src/**/*.ts\" 1>&2",
-        "test": "mocha ./lib/tests/**/*.test.js\""
+        "test": "mocha ./lib/tests/**/*.test.js\"",
+        "copy:tests-assets": "cpx \"./src/tests/assets/**/*.json\" \"./lib/tests/assets\""
     },
     "keywords": [],
     "license": "MIT",
@@ -29,5 +30,8 @@
     "engines": {
         "npm": ">=8",
         "node": ">=16"
+    },
+    "dependencies": {
+        "cpx2": "^5.0.0"
     }
 }

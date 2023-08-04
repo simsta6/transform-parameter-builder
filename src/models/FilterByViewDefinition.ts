@@ -1,5 +1,6 @@
 import { Id64Array } from "@itwin/core-bentley";
-import { ClipData, PerModelCategoryData, SubCategoryOverrideData } from "./ViewDefinition";
+import { ClipData, PerModelCategoryData } from "./LegacyView";
+import { SubCategoryOverrideData } from "./ITwin3dView";
 
 export enum ViewModes {
   IncludeNewContent = "IncludeNewContent",

@@ -25,5 +25,4 @@ imjs_extensions
 *.bak
 *.orig
 .node-xmlhttprequest-sync*
-savedView.json
 transformParameters.json
