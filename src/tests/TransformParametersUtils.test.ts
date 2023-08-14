@@ -22,6 +22,7 @@ describe("Transform parameters utils", () => {
     expect(transformParameters.categories).to.be.equal(viewDefinition.categorySelectorProps.categories);
     expect(transformParameters.models).to.be.equal(viewDefinition.modelSelectorProps.models);
     expect(transformParameters.neverDrawn).to.be.equal(viewDefinition.emphasizeElementsProps.neverDrawn);
+    expect(transformParameters.alwaysDrawn).to.be.equal(viewDefinition.emphasizeElementsProps.alwaysDrawn);
     expect(transformParameters.subCategoryOvr).to.deep.equal(viewDefinition.displayStyleProps.jsonProperties.styles.subCategoryOvr);
 
     expect(transformParameters.clip).to.not.be.undefined;
@@ -41,7 +42,7 @@ describe("Transform parameters utils", () => {
 
     // Assert
     expect(transformParametersJSON).to.be.equal(
-      `{\\"categories\\":[\\"0x10000000001\\",\\"0x10000000002\\"],\\"models\\":[\\"0x20000000001\\",\\"0x20000000002\\"],\\"neverDrawn\\":[\\"0x30000000001\\",\\"0x30000000002\\"],\\"subCategoryOvr\\":[{\\"invisible\\":false,\\"subCategory\\":\\"0x40000000000\\"}],\\"clip\\":{\\"shapes\\":[{\\"points\\":[[1,-1,0],[2,-2,0]],\\"trans\\":[[-1,-2,0,3],[1,-1,0,0]],\\"zlow\\":-5,\\"zhigh\\":5}],\\"planes\\":[{\\"clips\\":[[{\\"normal\\":[0,0,-1],\\"dist\\":1},{\\"normal\\":[0,-1,0],\\"dist\\":1}]]}]},\\"viewMode\\":\\"FilterContent\\"}`
+      `{\\"categories\\":[\\"0x10000000001\\",\\"0x10000000002\\"],\\"models\\":[\\"0x20000000001\\",\\"0x20000000002\\"],\\"neverDrawn\\":[\\"0x30000000001\\",\\"0x30000000002\\"],\\"alwaysDrawn\\":[\\"0x30000000003\\",\\"0x30000000004\\"],\\"subCategoryOvr\\":[{\\"invisible\\":false,\\"subCategory\\":\\"0x40000000000\\"}],\\"clip\\":{\\"shapes\\":[{\\"points\\":[[1,-1,0],[2,-2,0]],\\"trans\\":[[-1,-2,0,3],[1,-1,0,0]],\\"zlow\\":-5,\\"zhigh\\":5}],\\"planes\\":[{\\"clips\\":[[{\\"normal\\":[0,0,-1],\\"dist\\":1},{\\"normal\\":[0,-1,0],\\"dist\\":1}]]}]},\\"viewMode\\":\\"FilterContent\\"}`
     );
   });
 
@@ -55,7 +56,7 @@ describe("Transform parameters utils", () => {
 
     // Assert
     expect(transformParametersJSON).to.be.equal(
-      `{"categories":["0x10000000001","0x10000000002"],"models":["0x20000000001","0x20000000002"],"neverDrawn":["0x30000000001","0x30000000002"],"subCategoryOvr":[{"invisible":false,"subCategory":"0x40000000000"}],"clip":{"shapes":[{"points":[[1,-1,0],[2,-2,0]],"trans":[[-1,-2,0,3],[1,-1,0,0]],"zlow":-5,"zhigh":5}],"planes":[{"clips":[[{"normal":[0,0,-1],"dist":1},{"normal":[0,-1,0],"dist":1}]]}]},"viewMode":"FilterContent"}`
+      `{"categories":["0x10000000001","0x10000000002"],"models":["0x20000000001","0x20000000002"],"neverDrawn":["0x30000000001","0x30000000002"],"alwaysDrawn":["0x30000000003","0x30000000004"],"subCategoryOvr":[{"invisible":false,"subCategory":"0x40000000000"}],"clip":{"shapes":[{"points":[[1,-1,0],[2,-2,0]],"trans":[[-1,-2,0,3],[1,-1,0,0]],"zlow":-5,"zhigh":5}],"planes":[{"clips":[[{"normal":[0,0,-1],"dist":1},{"normal":[0,-1,0],"dist":1}]]}]},"viewMode":"FilterContent"}`
     );
   });
 
@@ -81,6 +82,7 @@ describe("Transform parameters utils", () => {
       categories: ["0x10000000001", "0x10000000002"],
       models: ["0x20000000001", "0x20000000002"],
       neverDrawn: ["0x30000000001", "0x30000000002"],
+      alwaysDrawn: ["0x30000000003", "0x30000000004"],
       subCategoryOvr: [{ invisible: false, subCategory: "0x40000000000" }],
       clip: {
         shapes: [
@@ -116,7 +118,7 @@ describe("Transform parameters utils", () => {
     return {
       categorySelectorProps: { categories: ["0x10000000001", "0x10000000002"] },
       modelSelectorProps: { models: ["0x20000000001", "0x20000000002"] },
-      emphasizeElementsProps: { neverDrawn: ["0x30000000001", "0x30000000002"] },
+      emphasizeElementsProps: { neverDrawn: ["0x30000000001", "0x30000000002"], alwaysDrawn: ["0x30000000003", "0x30000000004"] },
       displayStyleProps: {
         jsonProperties: {
           styles: { subCategoryOvr: [{ invisible: false, subCategory: "0x40000000000" }] },

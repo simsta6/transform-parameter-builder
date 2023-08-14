@@ -12,6 +12,7 @@ export interface TransformParameters {
   hiddenCategories?: Id64Array;
   models: Id64Array;
   hiddenModels?: Id64Array;
+  alwaysDrawn?: Id64Array;
   neverDrawn?: Id64Array;
   subCategoryOvr?: SubCategoryOverrideData[];
   clip?: ClipData;
