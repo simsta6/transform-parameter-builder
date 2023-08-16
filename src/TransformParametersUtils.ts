@@ -7,6 +7,7 @@ import { SavedView } from "./models/SavedView";
 import { NewClipPrimitivePlaneProps, NewClipPrimitiveShapeProps } from "./models/ClipVectors";
 
 export function parseSavedView(savedView: SavedView, viewMode: ViewModes): TransformParameters {
+  // TODO: add a way to handle alwaysDrawn parameter
   return {
     categories: savedView.savedViewData.itwin3dView.categories?.enabled ?? [],
     models: savedView.savedViewData.itwin3dView.models?.enabled || [],
@@ -25,6 +26,7 @@ export function parseLegacySavedView(legacyViewDefinition: LegacyView, viewMode:
     categories: legacyViewDefinition.categorySelectorProps.categories,
     models: legacyViewDefinition.modelSelectorProps?.models || [],
     neverDrawn: legacyViewDefinition.emphasizeElementsProps?.neverDrawn,
+    alwaysDrawn: legacyViewDefinition.emphasizeElementsProps?.alwaysDrawn,
     subCategoryOvr: legacyViewDefinition.displayStyleProps.jsonProperties?.styles?.subCategoryOvr as SubCategoryOverrideData[],
     clip: tryGetClipDataForLegacyView(legacyViewDefinition.viewDefinitionProps.jsonProperties?.viewDetails?.clip),
     perModelCategoryVisibility: legacyViewDefinition.perModelCategoryVisibility,

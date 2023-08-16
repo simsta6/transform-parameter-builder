@@ -9,7 +9,7 @@
         "start": "node ./lib/index.js",
         "lint": "eslint -f visualstudio \"./src/**/*.ts\" 1>&2",
         "lint:fix": "eslint --fix -f visualstudio \"./src/**/*.ts\" 1>&2",
-        "test": "mocha ./lib/tests/**/*.test.js\"",
+        "test": "mocha \"./lib/tests/**/*.test.js\"",
         "copy:tests-assets": "cpx \"./src/tests/assets/**/*.json\" \"./lib/tests/assets\""
     },
     "keywords": [],
