@@ -1,7 +1,8 @@
 # Transform parameters builder for FilterByViewDefinition transformation
 
 This is a tool to get transformation parameters for the [FilterByViewDefinition](https://developer.bentley.com/apis/transformations/operations/filterbyviewdefinition/) transformation.
-There are multiple ways to get a saved view object that is used to construct transformation parameters. Make sure the object has these properties (NOTE: real data will contain more information):
+To get compatible saved views, use [Saves Views API](https://developer.bentley.com/apis/savedviews/operations/get-savedview/). Do not forget to set the `Prefer` header to 'return=representation`.
+Make sure the object has these properties (NOTE: real data will contain more information):
 
 ```json
 {
@@ -208,7 +209,7 @@ There are multiple ways to get a saved view object that is used to construct tra
 
 ## Usage
 
-1. Paste a saved view json into  `savedView.json` file.
+1. Paste a saved view json object into  `savedView.json` file.
 1. Run:
     - `npm run start`
     - `npm run start -- escape`  to get parameters with escaped quotation marks.
