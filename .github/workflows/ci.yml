@@ -6,7 +6,7 @@ on:
 
 jobs:
   check-change-files:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: Build and run lint
 
     steps:
