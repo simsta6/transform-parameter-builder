@@ -1,7 +1,7 @@
 # Transform parameters builder for FilterByViewDefinition transformation
 
 This is a tool to get transformation parameters for the [FilterByViewDefinition](https://developer.bentley.com/apis/transformations/operations/filterbyviewdefinition/) transformation.
-To get compatible saved views, use [Saves Views API](https://developer.bentley.com/apis/savedviews/operations/get-savedview/). Do not forget to set the `Prefer` header to 'return=representation`.
+To get compatible saved views, use [Saves Views API](https://developer.bentley.com/apis/savedviews/operations/get-savedview/). Set the `Prefer` header to 'return=representation`.
 Make sure the object has these properties (NOTE: real data will contain more information):
 
 ```json
