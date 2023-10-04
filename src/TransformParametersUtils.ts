@@ -1,7 +1,7 @@
 import { ClipPrimitivePlanesProps, ClipPrimitiveShapeProps, ClipVectorProps } from "@itwin/core-geometry";
 import { ClipData, LegacyView, PerModelCategoryData, PlaneProps, ShapeProps } from "./models/LegacyView";
 import { TransformParameters, ViewModes } from "./models/FilterByViewDefinition";
-import { Id64Array } from "@itwin/core-bentley";
+import { Id64, Id64Array, Id64String, CompressedId64Set, Id64Set } from "@itwin/core-bentley";
 import { SubCategoryOverrideData } from "./models/ITwin3dView";
 import { SavedView } from "./models/SavedView";
 import { NewClipPrimitivePlaneProps, NewClipPrimitiveShapeProps } from "./models/ClipVectors";
@@ -33,6 +33,37 @@ export function parseLegacySavedView(legacyViewDefinition: LegacyView, viewMode:
     hiddenCategories: legacyViewDefinition.hiddenCategories,
     hiddenModels: legacyViewDefinition.hiddenModels,
     viewMode,
+  };
+}
+
+function getExcludedElementSet(view: LegacyView): Id64Set {
+  const excludedElements = view.displayStyleProps.jsonProperties?.styles?.excludedElements;
+  if (excludedElements === undefined)
+    return new Set<Id64String>();
+  if (typeof excludedElements === "string")
+    return CompressedId64Set.decompressSet(excludedElements);
+
+  return new Set<Id64String>(excludedElements);
+}
+
+export function parseOpenCitiesSavedView(legacyViewDefinition: LegacyView): TransformParameters {
+  const transparentElements = legacyViewDefinition.emphasizeElementsProps?.appearanceOverride?.map((a) => a.ids ?? []).flat() ?? [];
+  const excludedElementSet = getExcludedElementSet(legacyViewDefinition);
+  const alwaysDrawnElements: Id64Array = [];
+  transparentElements.forEach((element) => {
+    if (!excludedElementSet.has(element))
+      alwaysDrawnElements.push(element);
+  });
+
+  return {
+    categories: [],
+    models: legacyViewDefinition.modelSelectorProps?.models || [],
+    neverDrawn: legacyViewDefinition.emphasizeElementsProps?.neverDrawn,
+    alwaysDrawn: alwaysDrawnElements,
+    subCategoryOvr: legacyViewDefinition.displayStyleProps.jsonProperties?.styles?.subCategoryOvr as SubCategoryOverrideData[],
+    clip: tryGetClipDataForLegacyView(legacyViewDefinition.viewDefinitionProps.jsonProperties?.viewDetails?.clip),
+    perModelCategoryVisibility: legacyViewDefinition.perModelCategoryVisibility,
+    viewMode: ViewModes.FilterContent,
   };
 }
 

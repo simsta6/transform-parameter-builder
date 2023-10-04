@@ -1,18 +1,16 @@
 import { readFileSync, writeFileSync } from "fs";
-import { parseLegacySavedView, parseTransformParametersToJson } from "./TransformParametersUtils";
-import { ViewModes } from "./models/FilterByViewDefinition";
 import { SavedView } from "./models/SavedView";
 import path from "path";
+import { parseOpenCitiesSavedView, parseTransformParametersToJson } from "./TransformParametersUtils";
 
 function run(): void {
   const savedViewFileName = "savedView.json";
   const outputFileName = "transformParameters.json";
-  const viewMode: ViewModes = !!process.argv.find((value) => value === "includeNewContent") ? ViewModes.IncludeNewContent : ViewModes.FilterContent;
   const escapeFlag = !!process.argv.find((value) => value === "escape");
 
   const savedViewJSON = readFileSync(path.join(__dirname, "../", savedViewFileName), "utf8");
   const savedView: SavedView = JSON.parse(savedViewJSON).savedView;
-  const transformParameters = parseLegacySavedView(savedView.savedViewData.legacyView, viewMode);
+  const transformParameters = parseOpenCitiesSavedView(savedView.savedViewData.legacyView);
 
   const transformParametersJSON = parseTransformParametersToJson(transformParameters, escapeFlag);
 
