@@ -8,7 +8,6 @@ import { NewClipPrimitivePlaneProps, NewClipPrimitiveShapeProps } from "./models
 
 export function parseSavedView(savedView: SavedView, viewMode: ViewModes): TransformParameters {
   // TODO: add a way to handle alwaysDrawn parameter
-  console.log("aaa");
   return {
     categories: getListFromListOrCompressedId64Set(savedView.savedViewData.itwin3dView.categories?.enabled),
     models: getListFromListOrCompressedId64Set(savedView.savedViewData.itwin3dView.models?.enabled),
@@ -23,7 +22,6 @@ export function parseSavedView(savedView: SavedView, viewMode: ViewModes): Trans
 }
 
 export function parseLegacySavedView(legacyViewDefinition: LegacyView, viewMode: ViewModes): TransformParameters {
-  console.log("bbb");
   return {
     categories: getListFromListOrCompressedId64Set(legacyViewDefinition.categorySelectorProps.categories),
     models: getListFromListOrCompressedId64Set(legacyViewDefinition.modelSelectorProps?.models),
@@ -40,16 +38,13 @@ export function parseLegacySavedView(legacyViewDefinition: LegacyView, viewMode:
 
 function getListFromListOrCompressedId64Set(ids?: string | Id64Array) {
   if (ids === undefined) {
-    console.log("ccc");
     return [];
   }
 
   if (typeof ids === "string") {
-    console.log("ddd");
     return CompressedId64Set.decompressArray(ids);
   }
 
-  console.log("eee");
   return ids;
 }
 
