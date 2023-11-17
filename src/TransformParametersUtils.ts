@@ -25,8 +25,8 @@ export function parseSavedView(savedView: SavedView, viewMode: ViewModes): Trans
 export function parseLegacySavedView(legacyViewDefinition: LegacyView, viewMode: ViewModes): TransformParameters {
   console.log("bbb");
   return {
-    categories: legacyViewDefinition.categorySelectorProps.categories,
-    models: legacyViewDefinition.modelSelectorProps?.models || [],
+    categories: getListFromListOrCompressedId64Set(legacyViewDefinition.categorySelectorProps.categories),
+    models: getListFromListOrCompressedId64Set(legacyViewDefinition.modelSelectorProps?.models),
     neverDrawn: legacyViewDefinition.emphasizeElementsProps?.neverDrawn,
     alwaysDrawn: legacyViewDefinition.emphasizeElementsProps?.alwaysDrawn,
     subCategoryOvr: legacyViewDefinition.displayStyleProps.jsonProperties?.styles?.subCategoryOvr as SubCategoryOverrideData[],
