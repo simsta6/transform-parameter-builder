@@ -1,7 +1,7 @@
 import { ClipPrimitivePlanesProps, ClipPrimitiveShapeProps, ClipVectorProps } from "@itwin/core-geometry";
 import { ClipData, LegacyView, PerModelCategoryData, PlaneProps, ShapeProps } from "./models/LegacyView";
 import { TransformParameters, ViewModes } from "./models/FilterByViewDefinition";
-import { Id64Array } from "@itwin/core-bentley";
+import { CompressedId64Set, Id64Array } from "@itwin/core-bentley";
 import { SubCategoryOverrideData } from "./models/ITwin3dView";
 import { SavedView } from "./models/SavedView";
 import { NewClipPrimitivePlaneProps, NewClipPrimitiveShapeProps } from "./models/ClipVectors";
@@ -9,14 +9,14 @@ import { NewClipPrimitivePlaneProps, NewClipPrimitiveShapeProps } from "./models
 export function parseSavedView(savedView: SavedView, viewMode: ViewModes): TransformParameters {
   // TODO: add a way to handle alwaysDrawn parameter
   return {
-    categories: savedView.savedViewData.itwin3dView.categories?.enabled ?? [],
-    models: savedView.savedViewData.itwin3dView.models?.enabled || [],
+    categories: getListFromListOrCompressedId64Set(savedView.savedViewData.itwin3dView.categories?.enabled),
+    models: getListFromListOrCompressedId64Set(savedView.savedViewData.itwin3dView.models?.enabled),
     neverDrawn: getExtensionValue<Id64Array>(savedView.extensions, "emphasizeElementsProps"),
     subCategoryOvr: savedView.savedViewData.itwin3dView.displayStyle?.subCategoryOverrides,
     clip: tryGetClipData(savedView.savedViewData.itwin3dView.clipVectors),
     perModelCategoryVisibility: getExtensionValue<PerModelCategoryData[]>(savedView.extensions, "perModelCategoryVisibilityProps") ?? [],
-    hiddenCategories: savedView.savedViewData.itwin3dView.categories?.disabled,
-    hiddenModels: savedView.savedViewData.itwin3dView.models?.disabled,
+    hiddenCategories: getListFromListOrCompressedId64Set(savedView.savedViewData.itwin3dView.categories?.disabled),
+    hiddenModels: getListFromListOrCompressedId64Set(savedView.savedViewData.itwin3dView.models?.disabled),
     viewMode,
   };
 }
@@ -34,6 +34,18 @@ export function parseLegacySavedView(legacyViewDefinition: LegacyView, viewMode:
     hiddenModels: legacyViewDefinition.hiddenModels,
     viewMode,
   };
+}
+
+function getListFromListOrCompressedId64Set(ids?: string | Id64Array) {
+  if (ids === undefined) {
+    return [];
+  }
+
+  if (typeof ids === "string") {
+    return CompressedId64Set.decompressArray(ids);
+  }
+
+  return ids;
 }
 
 function getExtensionValue<R>(extensions: { extensionName: string, data: string }[], extensionName: string): R | undefined {
