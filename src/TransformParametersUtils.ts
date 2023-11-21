@@ -30,8 +30,8 @@ export function parseLegacySavedView(legacyViewDefinition: LegacyView, viewMode:
     subCategoryOvr: legacyViewDefinition.displayStyleProps.jsonProperties?.styles?.subCategoryOvr as SubCategoryOverrideData[],
     clip: tryGetClipDataForLegacyView(legacyViewDefinition.viewDefinitionProps.jsonProperties?.viewDetails?.clip),
     perModelCategoryVisibility: legacyViewDefinition.perModelCategoryVisibility,
-    hiddenCategories: legacyViewDefinition.hiddenCategories,
-    hiddenModels: legacyViewDefinition.hiddenModels,
+    hiddenCategories: getListFromListOrCompressedId64Set(legacyViewDefinition.hiddenCategories),
+    hiddenModels: getListFromListOrCompressedId64Set(legacyViewDefinition.hiddenModels),
     viewMode,
   };
 }
